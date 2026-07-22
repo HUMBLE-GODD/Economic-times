@@ -62,7 +62,10 @@ An enterprise-grade, dataset-grounded **Industrial Safety Intelligence OS & AI P
 
 ## 📐 Architecture
 
+📄 **PDF Architecture Document**: [architecture_diagram.pdf](architecture_diagram.pdf)
+
 The following Mermaid diagram illustrates the end-to-end multi-layer architecture of the Industrial Safety Intelligence Platform:
+
 
 ```mermaid
 flowchart TD
