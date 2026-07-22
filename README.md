@@ -60,7 +60,75 @@ An enterprise-grade, dataset-grounded **Industrial Safety Intelligence OS & AI P
 
 ---
 
+## 📐 Architecture
+
+The following Mermaid diagram illustrates the end-to-end multi-layer architecture of the Industrial Safety Intelligence Platform:
+
+```mermaid
+flowchart TD
+    subgraph ClientLayer ["1. Frontend Web OS (Client Layer)"]
+        UI["Vanilla JS + HTML5 / CSS3 Interface"]
+        SurveillanceWall["CCTV Live Surveillance Wall (4 Active Video Streams)"]
+        Studio["CCTV Frame Incident Analysis Studio"]
+        ControlMatrix["RBAC Administration & Audit Matrix"]
+        AlertsWS["WebSocket Live Alert Stream Listener"]
+    end
+
+    subgraph APILayer ["2. FastAPI Core Backend Engine (API Layer)"]
+        FastAPI["FastAPI Engine (Python 3.13)"]
+        AuthModule["Auth & RBAC Module (PBKDF2 + Bearer Tokens)"]
+        CVEndpoint["CCTV Vision Analysis Router (/api/computer-vision/*)"]
+        RAGEndpoint["RAG Compliance Retrieval Router (/api/compliance)"]
+        KGEndpoint["Knowledge Graph Query Router (/api/knowledge-graph)"]
+        PredictiveEndpoint["Predictive Maintenance Router (/api/risk/*)"]
+        AuditModule["Audit Logging & Security Module"]
+    end
+
+    subgraph AIEngineLayer ["3. AI & Analytics Core Engines"]
+        CVEngine["CV Incident Detection Engine (cv_engine.py)"]
+        YOLOModel["Pre-installed YOLOv8 Detectors (yolov8n.pt, yolov8s.pt)"]
+        RAGEngine["RAG Citation Engine (TF-IDF Vector Index)"]
+        KGEngine["Knowledge Graph Builder (1072 Nodes / 1492 Edges)"]
+        MLModels["Predictive RUL & Anomaly Models (Scikit-Learn)"]
+    end
+
+    subgraph DataStorageLayer ["4. Data & Media Storage Layer"]
+        DB[("SQLite3 Database (safety_platform.db)")]
+        ModelStorage["Pretrained Model Registry (models/cv/)"]
+        RAGIndex["RAG Index Storage (rag/index.json)"]
+        KGGraph["Knowledge Graph Store (knowledge_graph/graph.json)"]
+        MediaStorage["CCTV Streams & Snapshots (frontend/media/, cv_snapshots/)"]
+        RawDatasets["Industrial Datasets (UCI, NASA C-MAPSS, OSHA)"]
+    end
+
+    %% Flow Connections
+    UI -->|HTTP REST API| FastAPI
+    SurveillanceWall -->|Continuous Loop Stream| MediaStorage
+    Studio -->|Base64 Frame Upload| CVEndpoint
+    AlertsWS <-->|Real-time WS Push| FastAPI
+
+    FastAPI --> AuthModule
+    FastAPI --> AuditModule
+    CVEndpoint --> CVEngine
+    RAGEndpoint --> RAGEngine
+    KGEndpoint --> KGEngine
+    PredictiveEndpoint --> MLModels
+
+    CVEngine -->|Inference| YOLOModel
+    CVEngine -->|Save Annotated Snapshot| MediaStorage
+    RAGEngine -->|Read Citations| RAGIndex
+    KGEngine -->|Query Relationships| KGGraph
+    MLModels -->|Model Cards & Registry| ModelStorage
+
+    AuthModule --> DB
+    AuditModule --> DB
+    RAGEngine --> RawDatasets
+```
+
+---
+
 ## 📁 Repository Architecture
+
 
 ```text
 ├── backend/
