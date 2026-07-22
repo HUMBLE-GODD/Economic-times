@@ -1962,10 +1962,37 @@ def health() -> dict[str, Any]:
     return {"status": "ok", "database": str(DB_PATH), "time": now()}
 
 
+def ensure_seed_users(conn: sqlite3.Connection) -> None:
+    try:
+        count = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+        if count == 0:
+            org_id = ORG_ID
+            created_time = now()
+            password = os.getenv("DEMO_ADMIN_PASSWORD", "SafetyDemo!2026")
+            hashed = hash_password(password)
+            seed_users = [
+                ("user_admin", "admin@industrial.local", "Safety Operations Admin", "admin"),
+                ("user_ehs", "ehs@industrial.local", "EHS Manager", "ehs_manager"),
+                ("user_ops", "ops@industrial.local", "Operations Supervisor", "operations_supervisor"),
+                ("user_maint", "maintenance@industrial.local", "Maintenance Lead", "maintenance_lead"),
+                ("user_operator", "operator@industrial.local", "Process Operator", "operator"),
+                ("user_worker", "worker@industrial.local", "Field Worker", "worker"),
+            ]
+            conn.executemany(
+                "INSERT OR IGNORE INTO users VALUES (?,?,?,?,?,?,?,?)",
+                [(u_id, org_id, email, name, role, hashed, 1, created_time) for u_id, email, name, role in seed_users],
+            )
+            conn.commit()
+    except Exception as err:
+        print(f"[Auth] ensure_seed_users note: {err}")
+
+
 @app.post("/api/auth/login")
 def login(payload: LoginRequest) -> dict[str, Any]:
     with db() as conn:
-        user = one(conn, "SELECT * FROM users WHERE email=? AND active=1", (payload.email,))
+        ensure_seed_users(conn)
+        clean_email = payload.email.strip().lower()
+        user = one(conn, "SELECT * FROM users WHERE LOWER(email)=? AND active=1", (clean_email,))
         if not user or not verify_password(payload.password, user["password_hash"]):
             raise HTTPException(status_code=401, detail="Invalid credentials")
         access = sign({"sub": user["id"], "role": user["role"], "email": user["email"]}, ACCESS_TTL_SECONDS)
@@ -1974,6 +2001,7 @@ def login(payload: LoginRequest) -> dict[str, Any]:
         audit(conn, user["email"], "login", "session", user["id"], {"role": user["role"]})
         conn.commit()
         return {"access_token": access, "refresh_token": refresh, "token_type": "bearer", "user": user_public(user)}
+
 
 
 @app.post("/api/auth/refresh")
