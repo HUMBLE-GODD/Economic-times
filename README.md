@@ -2,7 +2,22 @@
 
 An enterprise-grade, dataset-grounded **Industrial Safety Intelligence OS & AI Platform**. This platform integrates real-time CCTV computer vision incident detection, predictive maintenance, RAG-grounded regulatory intelligence, an equipment-hazard knowledge graph, a digital twin simulation engine, and an enterprise top-navigation web control interface.
 
+> 🚀 **Live Deployment**: [https://trinetra-wsfr.onrender.com](https://trinetra-wsfr.onrender.com)
+
 ---
+
+## 🖼️ Application Interface & Screenshots
+
+| Mission Control Dashboard | Digital Twin Simulation |
+| :---: | :---: |
+| ![Mission Control](docs/images/mission_control.png) | ![Digital Twin](docs/images/digital_twin.png) |
+
+| CCTV Live Surveillance & Vision Studio | Risk Intelligence Engine |
+| :---: | :---: |
+| ![CCTV Surveillance Wall](docs/images/cctv_surveillance_wall.png) | ![Risk Intelligence](docs/images/risk_intelligence.png) |
+
+---
+
 
 ## 🌟 Key Capabilities
 
