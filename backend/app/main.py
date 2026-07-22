@@ -651,7 +651,14 @@ def init_schema() -> None:
 
 
 def read_csv(path: str, nrows: int | None = None) -> pd.DataFrame:
-    return pd.read_csv(ROOT / path, nrows=nrows, low_memory=False)
+    target = ROOT / path
+    if not target.exists():
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(target, nrows=nrows, low_memory=False)
+    except Exception:
+        return pd.DataFrame()
+
 
 
 def reset_seeded_data(conn: sqlite3.Connection) -> None:
@@ -857,8 +864,12 @@ def seed_database() -> None:
 
         incidents = read_csv("datasets/engineered/incidents/incident_intelligence.csv")
         zone_rows = []
-        event_text = incidents["eventtitle"].fillna("").astype(str) + " " + incidents["sourcetitle"].fillna("").astype(str) + " " + incidents["final_narrative"].fillna("").astype(str)
+        if not incidents.empty and "eventtitle" in incidents.columns and "sourcetitle" in incidents.columns and "final_narrative" in incidents.columns:
+            event_text = incidents["eventtitle"].fillna("").astype(str) + " " + incidents["sourcetitle"].fillna("").astype(str) + " " + incidents["final_narrative"].fillna("").astype(str)
+        else:
+            event_text = pd.Series(dtype=str)
         zone_baseline = {
+
             "zone_raw_materials": 42,
             "zone_process": 64,
             "zone_reactor": 68,
@@ -1927,8 +1938,12 @@ def init_cv_pipeline() -> None:
 @app.on_event("startup")
 def startup() -> None:
     init_schema()
-    seed_database()
+    try:
+        seed_database()
+    except Exception as err:
+        print(f"[Startup] Database seed note (using default fallbacks): {err}")
     init_cv_pipeline()
+
 
 
 
