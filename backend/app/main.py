@@ -646,8 +646,11 @@ def audit(conn: sqlite3.Connection, actor: str, action: str, entity_type: str, e
 
 
 def init_schema() -> None:
-    with db() as conn:
-        conn.executescript(MIGRATION_PATH.read_text())
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if MIGRATION_PATH.exists():
+        with db() as conn:
+            conn.executescript(MIGRATION_PATH.read_text())
+
 
 
 def read_csv(path: str, nrows: int | None = None) -> pd.DataFrame:
@@ -1925,14 +1928,16 @@ def process_uploaded_dataset(conn: sqlite3.Connection, upload: FactoryDatasetUpl
 
 
 def init_cv_pipeline() -> None:
-    cv_dir = ROOT / "models" / "cv"
-    manifest_path = cv_dir / "model_manifest.json"
-    if not manifest_path.exists() or not (cv_dir / "yolov8n.pt").exists():
-        try:
+    try:
+        cv_dir = ROOT / "models" / "cv"
+        cv_dir.mkdir(parents=True, exist_ok=True)
+        manifest_path = cv_dir / "model_manifest.json"
+        if not manifest_path.exists() or not (cv_dir / "yolov8n.pt").exists():
             from computer_vision.download_models import main as download_main
             download_main()
-        except Exception as err:
-            print(f"[Startup] CV model pre-installation note: {err}")
+    except Exception as err:
+        print(f"[Startup] CV model pre-installation note: {err}")
+
 
 
 @app.on_event("startup")
