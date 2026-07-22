@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Industrial Safety Intelligence Platform</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main id="loginView" class="login-shell">
+      <section class="login-panel">
+        <div>
+          <p class="eyebrow">Enterprise Safety OS</p>
+          <h1>Industrial Safety Intelligence Platform</h1>
+        </div>
+        <form id="loginForm" class="login-form">
+          <label>Email <input name="email" type="email" value="admin@industrial.local" autocomplete="username" /></label>
+          <label>Password <input name="password" type="password" value="SafetyDemo!2026" autocomplete="current-password" /></label>
+          <button type="submit">Sign In</button>
+          <p id="loginError" class="error"></p>
+        </form>
+      </section>
+    </main>
+
+    <main id="appView" class="app-shell hidden">
+      <header class="topbar">
+        <div class="brand">
+          <span class="mark">IS</span>
+          <div>
+            <strong>Industrial Safety Intelligence</strong>
+            <small id="userLabel">Operations Console</small>
+          </div>
+        </div>
+        <nav id="topNav" class="topnav">
+          <button data-module="mission" class="active">Mission Control</button>
+          <button data-module="operations">Operations</button>
+          <button data-module="twin">Digital Twin</button>
+          <button data-module="risk">Risk Intelligence</button>
+          <button data-module="permits">Permits</button>
+          <button data-module="maintenance">Maintenance</button>
+          <button data-module="assets">Assets</button>
+          <button data-module="workers">Workers</button>
+          <button data-module="compliance">Compliance</button>
+          <button data-module="reports">Reports</button>
+          <button data-module="copilot">AI Copilot</button>
+          <button data-module="admin">Administration</button>
+        </nav>
+      </header>
+
+      <section id="statusStrip" class="status-strip"></section>
+
+      <section id="mission" class="module active">
+        <div class="module-head">
+          <div><p class="eyebrow">Mission Control</p><h2>Enterprise Safety Command</h2></div>
+          <button id="refreshMission">Refresh</button>
+        </div>
+        <div id="kpiGrid" class="kpi-grid"></div>
+        <div class="two-col">
+          <section><h3>Top Risk Events</h3><div id="topRisks" class="data-list"></div></section>
+          <section><h3>Live Alerts</h3><div id="alerts" class="data-list"></div></section>
+        </div>
+      </section>
+
+      <section id="operations" class="module">
+        <div class="module-head"><div><p class="eyebrow">Operations</p><h2>Incident Investigation</h2></div><input id="incidentSearch" placeholder="Search incidents" /></div>
+        <div id="incidentTable" class="table-wrap"></div>
+      </section>
+
+      <section id="twin" class="module">
+        <div class="module-head"><div><p class="eyebrow">Digital Twin</p><h2>Live Dataset-Derived Twin</h2></div><button id="runSimulation">Run Gas Leak Simulation</button></div>
+        <div class="twin-layout">
+          <canvas id="twinCanvas" width="1180" height="650"></canvas>
+          <div>
+            <div class="sim-controls">
+              <label>Leak Source <select id="simulationZone"></select></label>
+              <label>Intensity <span id="simulationIntensityValue">0.8x</span><input id="simulationIntensity" type="range" min="0.1" max="1" step="0.1" value="0.8" /></label>
+              <label>Timeline <span id="simulationTimeValue">30 min</span><input id="simulationTime" type="range" min="0" max="30" step="5" value="30" /></label>
+            </div>
+            <div id="twinSummary" class="mini-grid twin-summary"></div>
+            <h3>Zone Layers</h3>
+            <div id="zoneList" class="data-list compact"></div>
+            <h3>Simulation</h3>
+            <pre id="simulationOutput"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="risk" class="module">
+        <div class="module-head"><div><p class="eyebrow">Risk Intelligence</p><h2>Compound Risk Engine</h2></div><button id="evaluateRisk">Evaluate Factory Risk</button></div>
+        <form id="factoryUploadForm" class="form-grid">
+          <label class="wide">Upload Factory CSV <input id="factoryDatasetFile" name="factory_dataset" type="file" accept=".csv,text/csv" /></label>
+          <label>Replace Prior Uploads <input name="replace_uploaded" type="checkbox" checked /></label>
+          <button type="submit">Process Dataset</button>
+          <button id="loadDemoDataset" type="button">Load Demo Factory</button>
+          <button id="downloadDemoDataset" type="button">Download Demo CSV</button>
+          <p class="hint wide">Recognized columns include zone, area, equipment, asset, health_score, gas, temperature, pressure, vibration, permit_status, incident, severity, timestamp.</p>
+        </form>
+        <div id="uploadResult" class="result-block"></div>
+        <div id="riskPanel" class="risk-panel"></div>
+        <div id="geoPanel" class="table-wrap"></div>
+      </section>
+
+      <section id="permits" class="module">
+        <div class="module-head"><div><p class="eyebrow">Permits</p><h2>Digital Permit Intelligence</h2></div></div>
+        <form id="permitForm" class="form-grid">
+          <label>Permit Type <select name="permit_type" id="permitType"><option>maintenance</option><option>hot_work</option><option>confined_space</option><option>electrical_isolation</option></select></label>
+          <label>Zone <select name="zone_id" id="permitZone"></select></label>
+          <label>Asset <select name="equipment_id" id="permitEquipment"></select></label>
+          <label>Gas Test <input name="gas_test_value" type="number" min="0" max="100" value="20" /></label>
+          <label>Simultaneous Work <input name="simultaneous_work" type="checkbox" /></label>
+          <label class="wide">Work Description <input name="work_description" value="Maintenance inspection with isolation and PPE verification" /></label>
+          <label class="wide">Controls <input name="controls" value="isolation, PPE, supervisor approval, toolbox talk" /></label>
+          <button type="submit">Review Permit</button>
+        </form>
+        <div id="permitResult" class="result-block"></div>
+        <div id="permitTable" class="table-wrap"></div>
+      </section>
+
+      <section id="maintenance" class="module">
+        <div class="module-head"><div><p class="eyebrow">Maintenance</p><h2>Predictive Maintenance Workbench</h2></div></div>
+        <div id="maintenanceTable" class="table-wrap"></div>
+      </section>
+
+      <section id="assets" class="module">
+        <div class="module-head"><div><p class="eyebrow">Assets</p><h2>Asset Health</h2></div></div>
+        <div id="assetSummary" class="mini-grid"></div>
+        <div id="assetTable" class="table-wrap"></div>
+      </section>
+
+      <section id="workers" class="module">
+        <div class="module-head"><div><p class="eyebrow">Workers</p><h2>Worker Role Risk Profiles</h2></div></div>
+        <div id="workerProfile" class="result-block"></div>
+        <div id="workerTable" class="table-wrap"></div>
+      </section>
+
+      <section id="compliance" class="module">
+        <div class="module-head"><div><p class="eyebrow">Compliance</p><h2>Compliance Intelligence</h2></div><button id="askCompliance">Ask Regulation</button></div>
+        <div class="inline-query">
+          <input id="regulationQuestion" value="What lockout tagout and permit controls are required before maintenance work?" />
+        </div>
+        <div id="complianceTable" class="table-wrap"></div>
+        <div id="knowledgeAnswer" class="result-block"></div>
+      </section>
+
+      <section id="reports" class="module">
+        <div class="module-head"><div><p class="eyebrow">Reports</p><h2>Enterprise Reporting</h2></div><button id="generateReport">Generate Executive Report</button></div>
+        <div id="reportOutput" class="result-block"></div>
+        <div id="reportTable" class="table-wrap"></div>
+      </section>
+
+      <section id="copilot" class="module">
+        <div class="module-head"><div><p class="eyebrow">AI Copilot</p><h2>Multi-Agent Decision Support</h2></div></div>
+        <form id="agentForm" class="form-grid">
+          <label>Agent <select name="agent_id" id="agentSelect"></select></label>
+          <label class="wide">Goal <input name="goal" value="Evaluate risk controls for lockout tagout and maintenance work" /></label>
+          <button type="submit">Run Agent</button>
+        </form>
+        <pre id="agentOutput"></pre>
+      </section>
+
+      <section id="admin" class="module">
+        <div class="module-head"><div><p class="eyebrow">Administration</p><h2>Users, Models, Audit, Computer Vision</h2></div></div>
+        <form id="adminUserForm" class="form-grid">
+          <label>Name <input name="name" value="Shift Supervisor" /></label>
+          <label>Email <input name="email" type="email" value="shift.supervisor@industrial.local" /></label>
+          <label>Role <select name="role" id="newUserRole"></select></label>
+          <label>Password <input name="password" type="text" value="SafetyDemo!2026" /></label>
+          <button type="submit">Create User</button>
+        </form>
+        <div id="adminUserResult" class="result-block"></div>
+        <section><h3>Role Access Matrix</h3><div id="roleCatalog" class="role-grid"></div></section>
+        <div id="userAdminTable" class="table-wrap"></div>
+        <div class="two-col">
+          <section><h3>Model Registry</h3><div id="modelRegistry" class="data-list"></div></section>
+          <section><h3>Audit Logs</h3><div id="auditLogs" class="data-list compact"></div></section>
+        </div>
+        <div class="module-subhead">
+          <h3>Computer Vision Pipeline & CCTV Incident Analysis Studio</h3>
+          <div class="btn-group">
+            <span class="cctv-incident-badge badge-clear">Pre-installed YOLOv8 AI Detector Active</span>
+            <button id="runCvInspection" type="button">Run Vision Audit</button>
+          </div>
+        </div>
+
+
+        <div class="cv-analyzer-box">
+          <h4>🎥 CCTV Incident & Safety Inspection Studio</h4>
+          <p class="muted">Upload a CCTV video frame or incident photo to perform real-time AI object detection (Workers, PPE violations, Fallen worker / Man-down, Vehicle-pedestrian proximity, Fire/Smoke detection).</p>
+          <div class="cctv-upload-form">
+            <input type="file" id="cctvFileInput" accept="image/*" />
+            <select id="cctvZoneSelect">
+              <option value="zone_tank_farm">Solvent Tank Farm (Hazard Storage)</option>
+              <option value="zone_reactor">Reactor Hall (Production)</option>
+              <option value="zone_raw_materials">Raw Materials Yard (Logistics)</option>
+              <option value="zone_packaging">Packaging Line (Machinery)</option>
+              <option value="zone_utilities">Utilities & Boiler Island (Steam/Heat)</option>
+            </select>
+            <button id="analyzeCctvBtn" type="button" class="primary-btn">🔍 Analyze CCTV Frame</button>
+          </div>
+          <div id="cctvAnalysisResult" class="cctv-analysis-output" style="display:none;"></div>
+        </div>
+
+        <div class="media-gallery-box">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h4 style="margin:0;">📹 Plant CCTV Live Surveillance Wall (4 Continuous Feeds)</h4>
+            <span class="cctv-incident-badge badge-clear">🔴 LIVE FEED AUTO-STREAMING</span>
+          </div>
+          <div class="video-samples-grid-4">
+            <div class="media-card video-card">
+              <div class="cctv-card-header">
+                <strong>📹 Camera #1 - Solvent Tank Farm</strong>
+                <span class="live-dot">● LIVE</span>
+              </div>
+              <video autoplay loop muted playsinline class="cctv-video-frame" poster="/static/media/cctv_camera_1_poster.jpg">
+                <source src="/static/media/cctv_camera_1.mp4" type="video/mp4" />
+                Your browser does not support video.
+              </video>
+            </div>
+            <div class="media-card video-card">
+              <div class="cctv-card-header">
+                <strong>📹 Camera #2 - Reactor Hall Train A</strong>
+                <span class="live-dot">● LIVE</span>
+              </div>
+              <video autoplay loop muted playsinline class="cctv-video-frame" poster="/static/media/cctv_camera_2_poster.jpg">
+                <source src="/static/media/cctv_camera_2.mp4" type="video/mp4" />
+                Your browser does not support video.
+              </video>
+            </div>
+            <div class="media-card video-card">
+              <div class="cctv-card-header">
+                <strong>📹 Camera #3 - Logistics Receiving Bay</strong>
+                <span class="live-dot">● LIVE</span>
+              </div>
+              <video autoplay loop muted playsinline class="cctv-video-frame" poster="/static/media/cctv_camera_3_poster.jpg">
+                <source src="/static/media/cctv_camera_3.mp4" type="video/mp4" />
+                Your browser does not support video.
+              </video>
+            </div>
+            <div class="media-card video-card">
+              <div class="cctv-card-header">
+                <strong>📹 Camera #4 - Utilities & Boiler Island</strong>
+                <span class="live-dot">● LIVE</span>
+              </div>
+              <video autoplay loop muted playsinline class="cctv-video-frame" poster="/static/media/cctv_camera_4_poster.jpg">
+                <source src="/static/media/cctv_camera_4.mp4" type="video/mp4" />
+                Your browser does not support video.
+              </video>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div id="cvStatus" class="result-block"></div>
+      </section>
+
+
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

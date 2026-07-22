@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pandas
+numpy
+pytest
+httpx
+jinja2
+

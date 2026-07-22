@@ -1,0 +1,41 @@
+{
+  "status": "ready",
+  "updated_at": 1784709123.3308227,
+  "models": {
+    "yolov8n": {
+      "name": "yolov8n",
+      "file": "models/cv/yolov8n.pt",
+      "size_bytes": 6549796,
+      "status": "available",
+      "description": "YOLOv8 Nano pretrained real-time object detector (COCO 80 classes: person, car, truck, bus, machinery, etc.)",
+      "tasks": [
+        "person_detection",
+        "vehicle_detection",
+        "machinery_detection",
+        "worker_counting"
+      ]
+    },
+    "yolov8s": {
+      "name": "yolov8s",
+      "file": "models/cv/yolov8s.pt",
+      "size_bytes": 22588772,
+      "status": "available",
+      "description": "YOLOv8 Small high-accuracy object detector for industrial CCTV feeds",
+      "tasks": [
+        "high_accuracy_person_detection",
+        "vehicle_pedestrian_proximity",
+        "restricted_area_intrusion"
+      ]
+    }
+  },
+  "supported_tasks": [
+    "person_detection",
+    "ppe_compliance",
+    "vehicle_pedestrian_proximity",
+    "restricted_area_intrusion",
+    "worker_down_fall_detection",
+    "smoke_fire_detection",
+    "spill_hazard_detection",
+    "machine_guarding_breach"
+  ]
+}

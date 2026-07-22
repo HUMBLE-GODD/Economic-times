@@ -1,0 +1,220 @@
+datasets:
+  - id: uci_ai4i_2020
+    status: selected_research_ready
+    domain: predictive_maintenance
+    local_path: datasets/raw/predictive_maintenance/uci_ai4i_2020/ai4i2020.csv
+    source_name: UCI Machine Learning Repository
+    title: AI4I 2020 Predictive Maintenance Dataset
+    source_url: https://archive.ics.uci.edu/dataset/601/ai4i+2020+predictive+maintenance+dataset
+    download_url: https://archive.ics.uci.edu/static/public/601/ai4i+2020+predictive+maintenance+dataset.zip
+    doi: 10.24432/C5HS5C
+    license_status: not_declared_in_uci_api
+    commercial_use_status: requires_manual_license_clearance
+    educational_use_status: usable_with_citation
+    source_credibility: high
+    data_nature: synthetic_industry_like
+    primary_use_cases:
+      - predictive maintenance classification
+      - failure mode modeling
+      - tabular explainability prototype
+    quality_notes: UCI metadata reports no missing values; synthetic benchmark, not plant telemetry.
+    keep_decision: keep_for_prototyping_not_for_field_claims
+
+  - id: nasa_cmapss
+    status: selected_research_ready
+    domain: predictive_maintenance
+    local_path: datasets/raw/predictive_maintenance/nasa_cmapss
+    source_name: NASA Open Data / Prognostics Center of Excellence
+    title: C-MAPSS Jet Engine Simulated Data
+    source_url: https://data.nasa.gov/dataset/cmapss-jet-engine-simulated-data
+    download_url: https://data.nasa.gov/docs/legacy/CMAPSSData.zip
+    license_status: nasa_open_data_public_source
+    commercial_use_status: likely_allowed_subject_to_nasa_terms
+    educational_use_status: allowed_with_attribution
+    source_credibility: high
+    data_nature: simulated_turbofan_degradation
+    primary_use_cases:
+      - remaining useful life
+      - time series degradation
+      - prognostics benchmark
+    quality_notes: Archive validated and contains FD001-FD004 train/test/RUL text files plus documentation.
+    keep_decision: keep_for_rul_and_prognostics
+
+  - id: uci_hydraulic_systems
+    status: acquired_pending_archive_validation
+    domain: telemetry
+    local_path: datasets/raw/telemetry/uci_hydraulic_systems/source.zip
+    source_name: UCI Machine Learning Repository
+    title: Condition Monitoring of Hydraulic Systems
+    source_url: https://archive.ics.uci.edu/dataset/447/condition+monitoring+of+hydraulic+systems
+    download_url: https://archive.ics.uci.edu/static/public/447/condition+monitoring+of+hydraulic+systems.zip
+    doi: 10.24432/C5K01N
+    license_status: not_declared_in_uci_api
+    commercial_use_status: requires_manual_license_clearance
+    educational_use_status: usable_with_citation
+    source_credibility: high
+    data_nature: real_test_rig_sensor_cycles
+    primary_use_cases:
+      - multivariate sensor health
+      - condition monitoring
+      - anomaly and degradation modeling
+    quality_notes: Archive is currently flagged by unzip as incomplete/corrupt; rerun acquisition before using.
+    keep_decision: hold_until_archive_valid
+
+  - id: uci_secom
+    status: selected_research_ready
+    domain: manufacturing_quality
+    local_path: datasets/raw/manufacturing/uci_secom
+    source_name: UCI Machine Learning Repository
+    title: SECOM
+    source_url: https://archive.ics.uci.edu/dataset/179/secom
+    download_url: https://archive.ics.uci.edu/static/public/179/secom.zip
+    doi: 10.24432/C54305
+    license_status: not_declared_in_uci_api
+    commercial_use_status: requires_manual_license_clearance
+    educational_use_status: usable_with_citation
+    source_credibility: high
+    data_nature: real_semiconductor_process_measurements
+    primary_use_cases:
+      - quality and yield classification
+      - sensor feature selection
+      - manufacturing anomaly analysis
+    quality_notes: SECOM names file states missing values exist; labels include pass/fail and timestamp.
+    keep_decision: keep_with_imputation_and_license_caveat
+
+  - id: uci_gas_sensor_drift
+    status: selected_research_ready
+    domain: gas_sensors
+    local_path: datasets/raw/gas_sensors/uci_gas_sensor_drift/Dataset
+    source_name: UCI Machine Learning Repository
+    title: Gas Sensor Array Drift Dataset
+    source_url: https://archive.ics.uci.edu/dataset/224/gas+sensor+array+drift+dataset
+    download_url: https://archive.ics.uci.edu/static/public/224/gas+sensor+array+drift+dataset.zip
+    doi: 10.24432/C5RP6W
+    license_status: not_declared_in_uci_api
+    commercial_use_status: requires_manual_license_clearance
+    educational_use_status: usable_with_citation
+    source_credibility: high
+    data_nature: chemical_sensor_measurements_with_drift
+    primary_use_cases:
+      - gas classification
+      - drift compensation
+      - exposure anomaly model prototype
+    quality_notes: LibSVM-like sparse text batches; no timestamps or plant spatial context.
+    keep_decision: keep_for_sensor_modeling
+
+  - id: uci_air_quality
+    status: selected_research_ready
+    domain: gas_sensors
+    local_path: datasets/raw/gas_sensors/uci_air_quality/AirQualityUCI.csv
+    source_name: UCI Machine Learning Repository
+    title: Air Quality
+    source_url: https://archive.ics.uci.edu/dataset/360/air+quality
+    download_url: https://archive.ics.uci.edu/static/public/360/air+quality.zip
+    doi: 10.24432/C59K5F
+    license_status: not_declared_in_uci_api
+    commercial_use_status: requires_manual_license_clearance
+    educational_use_status: usable_with_citation
+    source_credibility: high
+    data_nature: field_sensor_air_quality_time_series
+    primary_use_cases:
+      - gas exposure index prototyping
+      - missing sensor handling
+      - environmental risk trends
+    quality_notes: Uses semicolon delimiters, decimal commas, and -200 missing sentinels.
+    keep_decision: keep_with_cleaning
+
+  - id: osha_severe_injury
+    status: selected_production_quality_public
+    domain: incidents
+    local_path: datasets/raw/incidents/osha_severe_injury/January2015toOctober2025.csv
+    source_name: Occupational Safety and Health Administration
+    title: Severe Injury Reports
+    source_url: https://www.osha.gov/severe-injury-reports
+    download_url: https://www.osha.gov/sites/default/files/January2015toOctober2025.zip
+    license_status: us_government_public_data
+    commercial_use_status: likely_allowed_subject_to_dol_terms_and_privacy_review
+    educational_use_status: allowed_with_source_attribution
+    source_credibility: very_high
+    data_nature: real_reported_severe_work_injuries_under_federal_osha
+    primary_use_cases:
+      - incident pattern intelligence
+      - geospatial safety intelligence
+      - narrative RAG and event taxonomy
+      - hazard density by NAICS/location
+    quality_notes: OSHA warns data are periodically updated, federal OSHA only, and do not include fatalities.
+    keep_decision: keep
+
+  - id: osha_ita_2025
+    status: selected_production_quality_public
+    domain: incidents
+    local_path: datasets/raw/incidents/osha_ita_2025
+    source_name: Occupational Safety and Health Administration
+    title: Injury Tracking Application 2025 Summary and Case Detail Data
+    source_url: https://www.osha.gov/Establishment-Specific-Injury-and-Illness-Data
+    download_url: https://www.osha.gov/sites/default/files/ITA_300A_Summary_Data_2025_through_03-15-2026_v2.csv
+    license_status: us_government_public_data
+    commercial_use_status: likely_allowed_subject_to_dol_terms_and_privacy_review
+    educational_use_status: allowed_with_source_attribution
+    source_credibility: very_high
+    data_nature: real_employer_submitted_injury_and_illness_records
+    primary_use_cases:
+      - establishment risk scoring
+      - DART/TCR compliance analytics
+      - incident case text intelligence
+      - OSHA 300A/300/301 workflow modeling
+    quality_notes: OSHA explicitly warns some errors remain and data are not generalizable to all workers.
+    keep_decision: keep_with_quality_disclaimers
+
+  - id: osha_regulations
+    status: selected_rag_source
+    domain: regulations
+    local_path: datasets/raw/regulations/osha
+    source_name: Occupational Safety and Health Administration
+    title: OSHA regulations for reporting, lockout/tagout, and process safety management
+    source_url: https://www.osha.gov/laws-regs/regulations
+    license_status: us_government_public_information
+    commercial_use_status: likely_allowed_subject_to_dol_terms
+    educational_use_status: allowed_with_source_attribution
+    source_credibility: very_high
+    data_nature: official_regulatory_text_html
+    primary_use_cases:
+      - compliance RAG
+      - permit rule extraction
+      - audit checklist generation
+    quality_notes: HTML source should be normalized into sections before vector indexing.
+    keep_decision: keep
+
+  - id: nist_sp_800_82r3
+    status: selected_rag_source
+    domain: regulations
+    local_path: datasets/raw/regulations/nist/NIST_SP_800_82r3_ICS_Security.pdf
+    source_name: National Institute of Standards and Technology
+    title: Guide to Operational Technology Security, SP 800-82r3
+    source_url: https://csrc.nist.gov/publications/detail/sp/800-82/rev-3/final
+    download_url: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-82r3.pdf
+    license_status: us_government_publication
+    commercial_use_status: likely_allowed_subject_to_nist_terms
+    educational_use_status: allowed_with_source_attribution
+    source_credibility: very_high
+    data_nature: official_ot_ics_security_guidance
+    primary_use_cases:
+      - SCADA/ICS risk controls
+      - cybersecurity compliance RAG
+      - emergency response dependencies
+    quality_notes: PDF should be chunked by heading and page for citations.
+    keep_decision: keep
+
+rejected_or_gap_sources:
+  - need: PPE detection / CCTV worker safety
+    reason: Strong public datasets exist but many are Kaggle-authenticated, unclear commercial license, small, or not industry-specific.
+    recommended_next_step: Use COCO/OpenImages for generic person/PPE pretraining only after license review; collect site CCTV with consent for deployment.
+  - need: Permit-to-work records
+    reason: Real permit, isolation, hot-work, confined-space, and LOTO records are rarely public because they expose plant operations.
+    recommended_next_step: Build schema from OSHA/OISD/company SOPs; synthesize only workflow metadata for demos and label it synthetic.
+  - need: Plant layouts and hazard zones
+    reason: Facility maps are security-sensitive and generally not public.
+    recommended_next_step: Use OpenStreetMap only for external facility context; build synthetic digital twin layouts from public P&ID examples or customer-provided CAD.
+  - need: SCADA incident telemetry
+    reason: Useful public datasets such as SWaT/WADI often require request/registration and redistribution may be restricted.
+    recommended_next_step: Request access from dataset owner; keep outside repo until license allows storage.

@@ -1,0 +1,40 @@
+{
+  "agents": [
+    {
+      "id": "risk_intelligence",
+      "goal": "Detect compound industrial risk using telemetry, incidents, maintenance, permits, and compliance evidence.",
+      "memory": "audit_logs, risk_events, historical incidents",
+      "tools": ["compound_risk", "geospatial", "rag"],
+      "outputs": ["risk_score", "reasoning", "recommended_actions", "confidence"]
+    },
+    {
+      "id": "permit_intelligence",
+      "goal": "Review permits for missing controls, simultaneous work, gas-test risk, and regulatory evidence.",
+      "memory": "permit history and audit log",
+      "tools": ["permit_review", "OSHA RAG", "risk engine"],
+      "outputs": ["approval_status", "risk_score", "missing_controls", "citations"]
+    },
+    {
+      "id": "maintenance",
+      "goal": "Prioritize maintenance from equipment health, failure models, and RUL predictions.",
+      "memory": "maintenance_events and model registry",
+      "tools": ["equipment_failure_ai4i_v1", "cmapss_rul_v1"],
+      "outputs": ["priority", "health_score", "work_order_recommendation"]
+    },
+    {
+      "id": "incident_intelligence",
+      "goal": "Classify and explain incident patterns, similar cases, root causes, and geospatial clusters.",
+      "memory": "OSHA incident narratives",
+      "tools": ["incident_high_severity_v1", "knowledge_graph", "RAG"],
+      "outputs": ["pattern", "root_cause_hypothesis", "similar_incidents"]
+    },
+    {
+      "id": "emergency_response",
+      "goal": "Recommend immediate response actions based on risk, affected zone, hazards, and digital twin routes.",
+      "memory": "simulations, alerts, risk events",
+      "tools": ["simulation", "digital_twin", "notifications"],
+      "outputs": ["response_plan", "escalation", "route_status"]
+    }
+  ]
+}
+

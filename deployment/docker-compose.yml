@@ -1,0 +1,18 @@
+services:
+  industrial-safety-platform:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      APP_SECRET: change-me-in-production
+      DEMO_ADMIN_PASSWORD: SafetyDemo!2026
+      SAFETY_DB_PATH: /app/backend/safety_platform.db
+    volumes:
+      - ../datasets:/app/datasets:ro
+      - ../models:/app/models
+      - ../rag:/app/rag
+      - ../knowledge_graph:/app/knowledge_graph
+      - ../reports:/app/reports
+
