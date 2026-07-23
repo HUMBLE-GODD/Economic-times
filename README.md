@@ -8,6 +8,8 @@ An enterprise-grade, dataset-grounded **Industrial Safety Intelligence OS & AI P
 
 ## 🖼️ Application Interface & Screenshots
 
+📸 **Full UI Gallery**: Check out the complete UI screenshots and module previews in the [screenshots/](screenshots/) folder.
+
 | Mission Control Dashboard | Digital Twin Simulation |
 | :---: | :---: |
 | ![Mission Control](docs/images/mission_control.png) | ![Digital Twin](docs/images/digital_twin.png) |
@@ -17,6 +19,7 @@ An enterprise-grade, dataset-grounded **Industrial Safety Intelligence OS & AI P
 | ![CCTV Surveillance Wall](docs/images/cctv_surveillance_wall.png) | ![Risk Intelligence](docs/images/risk_intelligence.png) |
 
 ---
+
 
 
 ## 🌟 Key Capabilities
